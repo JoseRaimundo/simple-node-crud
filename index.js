@@ -8,9 +8,12 @@ const axios = require('axios')
 const Usuario = require('./model/Usuario')
 
 
+var port = process.env.PORT || 8080;
+
+
 // Crindo o que irá ser minha variável onde tá o servidor
 const server = express();
-server.listen(3000);
+server.listen(port);
 
 
 // Resolvendo o problema do front não funcionar com JSON: 
