@@ -83,6 +83,10 @@ server.post('/salvar', async(req, res) => {
     }  
 })
 
+server.get('/test', async(req, res) => {
+    return res.json({"resultado": "funcionando"});
+})
+
 
 server.get('/', async(req, res) => {
     res.render('index')
