@@ -29,14 +29,14 @@
             <id="formulario">
 
             <label for="">Nome completo:*</label>
-            <input id="nome" type="text" required><br>
+            <input id="nome" type="text" value="José Raimundo" required><br>
 
             <label for="">Data de Nascimento:</label>
-            <input id="data" type="date"><br>
-
+            <input id="data" type="date" value="1992-03-07"><br>
+ <!--  
             <label for="">Endereço:</label>
-            <input id="endereco"type="text"placeholder="Rua Augusto de Almeida N 70" required><br>
-        <!--     
+            <input id="endereco" type="text" placeholder="Rua Augusto de Almeida N 70" required value="teste"><br>
+          
             <label>Nº</label>
             <input type="number" name="" id="numero">
 
@@ -45,9 +45,10 @@
 
             <label for="">Cidade:</label>
             <input type="text"required><br>
-
+        -->
             <label for="">Cep:</label>
-            <input id="cep"type="text"required><br>
+            <input id="cep" type="number"required value="58240000"><br> 
+            <!--
 
             <label for="">Telefone:</label>
             <input id="telefone"type="tel" required><br>
@@ -84,13 +85,16 @@
             <input id="cpf"type="number" value="10973138408" required><br>
 
            
-            <input type="submit" onclick="validar()">
+            <input type="submit" onclick="cadastrar()">
 
         </div>
     </form>
 
 <footer>
-
+<section>
+    <div id="lista_cadastrados"></div>
+    <button id="botao_listar" onclick="listarUsuarios()">Listar usuários cadastrados</button>
+</section>
 </footer>
 </body>
 </html>

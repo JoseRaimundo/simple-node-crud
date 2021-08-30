@@ -1,9 +1,11 @@
-function validar(){
-  var nome = formUser.nome.value;
-  var data = formUser.data.value;
-  var endereco = formUser.endereco.value;
-  var cpf      = formUser.cpf.value;
 
+// pegando os dados do formulário em forma de json: https://www.learnwithjason.dev/blog/get-form-values-as-json
+function cadastrar(){
+  var nome      = formUser.nome.value;
+  var data      = formUser.data.value;
+  var cep  = formUser.cep.value;
+  var cpf       = formUser.cpf.value;
+  
   if(nome==""){
       alert("Preencha o campo nome.")
       formUser.nome.focus();
@@ -13,27 +15,31 @@ function validar(){
     alert("Preencha o campo Data de Nascimento.")
     formUser.nome.focus();
     return false;
-   }
-  if(endereco==""){
+  }
+  if(cep==""){
     alert("Preencha o campo Endereço.")
     formUser.endereco.focus();
     return false; 
   }
+  // FALTA - validar outros campos se estão em branco
 
 
-//   validar outros campos
-
+  // OK - Verfica se o CPF é válido
   if(validaCPF(cpf) == false){
     alert("CPF inválido.")
     formUser.cpf.focus();
     return false;
   }
 
-
-  
+ // monta o json para enviar para o back
+  let dados = { cpf, nome, cep, data }
+  console.log(dados);
+  // OK - Salva os dados no backend
+  savarUsuario(dados)  
 }
 
 
+// função que valida CPF
 function validaCPF(cpf) {
     if (cpf.length != 11) {
         return false;
@@ -72,19 +78,57 @@ function validaCPF(cpf) {
     }
 }
 
-function savarUsuario() {
+// Função que envia e salva os dados no backend
+
+
+ function savarUsuario(dados) {
+    // Enviando e recebendo dados usando XMLHttpRequest
+    // https://developer.mozilla.org/pt-BR/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest
+    // Resolvendo o problema de não receber dados do tipo json
+    // https://stackoverflow.com/questions/37654521/how-to-send-a-body-of-data-to-xmlhttprequest-that-looks-like-this
+     
     var url =  "http://localhost:3000/salvar";
     var xhr = new XMLHttpRequest();
     xhr.open('POST', url);
     xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.onreadystatechange = function () {
+
+    var result = xhr.onload =  function () {
+        console.log(">>>>>>>>>>")
         if (xhr.readyState == 4 && xhr.status == 200) {
-            alert(xhr.responseText);
+            console.log(xhr.responseText)
+            var resultado = JSON.parse(xhr.responseText)
+            if(resultado.resultado == "cadastrado"){
+              alert("Cadastrado com sucesso!")
+            }else if(resultado.resultado == "cep"){
+              alert("CEP inválido!")
+            }else {
+              alert("CPF já cadastrado!")
+            }
         }
     }
-    let myData =  {
-      "nome" : "Teste"
-    }
-    xhr.send(JSON.stringify(myData));
+    xhr.send(JSON.stringify(dados));
 }
-savarUsuario()
+
+function listarUsuarios(){
+  var url =  "http://localhost:3000/listar";
+  var xhr = new XMLHttpRequest();
+  var myArr;
+  var nomes = document.getElementById('lista_cadastrados')
+  xhr.open('GET', url);
+
+  xhr.onload = function () {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+      myArr =  JSON.parse(xhr.responseText);
+      console.log(myArr)
+      // listando elementos do json no html: https://pt.stackoverflow.com/questions/346084/html-javascript-listar-dados-json-em-ul-li
+      myArr.forEach(usuario => {
+        nomes.innerHTML += `<li>${ usuario.nome }, morador da cidade de: ${ usuario.endereco.localidade}</li>`
+      })
+      document.getElementById("botao_listar").disabled = true;
+
+    }
+  }
+  xhr.send(null);
+  console.log(myArr)
+}
+
