@@ -13,7 +13,6 @@ var port = process.env.PORT || 8080;
 
 // Crindo o que irá ser minha variável onde tá o servidor
 const server = express();
-server.listen(port);
 
 
 server.use(express.static(__dirname + '/public'));
@@ -90,3 +89,7 @@ server.get('/', async(req, res) => {
 })
 
 
+
+server.listen(port, function() {
+	console.log('Our app is running on http://localhost:' + port);
+});
