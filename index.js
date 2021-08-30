@@ -16,6 +16,10 @@ const server = express();
 server.listen(port);
 
 
+server.use(express.static(__dirname + '/public'));
+
+
+
 // Resolvendo o problema do front não funcionar com JSON: 
 // https://stackoverflow.com/questions/37654521/how-to-send-a-body-of-data-to-xmlhttprequest-that-looks-like-this
 // https://www.schoolofnet.com/forum/topico/nodejs-body-parser-esta-velho-904
@@ -82,17 +86,7 @@ server.post('/salvar', async(req, res) => {
 
 
 server.get('/', async(req, res) => {
-    try{
-        // Como consumir uma api, neste exemplo a api do cep, usando o axios
-        // https://pt.stackoverflow.com/questions/490975/consumindo-api-com-nodejs
-        const response = await axios.get('https://viacep.com.br/ws/58240000/json')
-        console.log(response.data)
-        // sbore stringify : https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
-        const obj = JSON.stringify( response.data );
-        console.log(response.data)
-    }catch(error){
-        console.log(error)
-    }
+    res.render('index')
 })
 
 

@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm install && node index.js",
-    "build-start": "npm install -g && node index.js"
+    "build-start": "npm install -g && node index.js",
+    "build": "parcel build front/index.html"
+
   },
   "repository": {
     "type": "git",

@@ -1,0 +1,30 @@
+body {
+    font-family:'Dosis', sans-serif;
+    font-size: 30px;
+}
+
+.divMenu {
+    padding-left: 60%;
+    border: solid 2px rgb(156, 159, 163);
+}
+
+.tituloPrincipal{
+    text-align: center;
+}
+#numero {
+    width: 70px; 
+    height: 16px
+}
+
+.listaMenu {
+    list-style-type: none;
+    color: red;
+    display: inline;
+    padding-left: 20px;
+}
+
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
